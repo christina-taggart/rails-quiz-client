@@ -1,3 +1,30 @@
 .container {
   margin: 3em;
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.quiz-container {
+  width: 299px;
+  min-height: 800px;
+  border: 1px solid black;
+  border-right: 0;
+  display: inline-block;
+  float: left;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.question-container {
+  width: 898px;
+  min-height: 800px;
+  border: 1px solid red;
+  display: inline-block;
+  float: left;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+#quiz-list li {
+  list-style-type: none;
 }

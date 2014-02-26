@@ -1,3 +1,29 @@
 <div class="container">
-  NOTHING TO SEE HERE!
+  <div class="quiz-container">
+    <ul id="quiz-list">
+    </ul>
+  </div>
+  <div class="question-container"></div>
 </div>
+
+
+<script id="quiz-template" type="text/template">
+    <li>
+      <div class="quiz-template">
+        <a class="quiz-link" href="#"></a>
+      </div>
+    </li>
+</script>
+
+<script id="question-template" type="text/template">
+  <div>
+    <h1 class="title"></h1>
+    <form method="post">
+      <input type="submit" value="Submit">
+    </form>
+  </div>
+</script>
+
+<script id="choice-template" type="text/template">
+  <input type="radio" value=0 >
+</script>
