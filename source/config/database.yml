@@ -1,0 +1,9 @@
+development:
+  adapter: postgresql
+  host: localhost
+  database: thick_client_dev
+
+test:
+  adapter: postgresql
+  host: localhost
+  database: thick_client_test
