@@ -1,0 +1,29 @@
+body {
+  background: black;
+  color: white;
+}
+
+h1 {
+  text-align: center;
+}
+
+div#intro {
+  width: 75%;
+  margin: 20px auto;
+  text-align: justify;
+}
+
+div#quiz-link, div#show-quizzes {
+  width: 50%;
+  margin: 30px auto;
+  padding: 50px 0;
+  text-align: center;
+}
+
+a {
+  text-decoration: none;
+  background: white;
+  padding: 8px;
+  border-radius: 3px;
+  color: black;
+}
