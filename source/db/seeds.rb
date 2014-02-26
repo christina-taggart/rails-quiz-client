@@ -17,3 +17,18 @@ question1.choices.create(choice: "None of the Above", is_correct: true)
 question2 = quiz.questions.create(question: "Is Javascript awesome?")
 question2.choices.create(choice: "Yes", is_correct: true)
 question2.choices.create(choice: "No", is_correct: false)
+
+
+quiz2 = Quiz.create(name: "History of Medieval Europe")
+
+question1 = quiz2.questions.create(question: "When was the Norman conquest?")
+question1.choices.create(choice: "745", is_correct: false)
+question1.choices.create(choice: "1215", is_correct: false)
+question1.choices.create(choice: "1066", is_correct: true)
+question1.choices.create(choice: "1348", is_correct: false)
+
+question2 = quiz2.questions.create(question: "Who was the last Anglo-Saxon king of England?")
+question2.choices.create(choice: "Henry II", is_correct: false)
+question2.choices.create(choice: "Harold", is_correct: true)
+question2.choices.create(choice: "Aethelred II", is_correct: false)
+question2.choices.create(choice: "John", is_correct: false)

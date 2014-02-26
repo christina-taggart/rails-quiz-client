@@ -1,15 +1,14 @@
 //-----QUIZ MODULE-----
 var Quiz = (function() {
   var _render = function(quiz) {
-      return "<div class='quiz" + quiz.quiz_id +"'><h2>" + quiz.name + "</h2><div class='question'></div></div>";
+      return "<div class='quiz' id='quiz" + quiz.quiz_id +"'><h2><a data-id=" + quiz.quiz_id + " href='/quizzes/" + quiz.quiz_id + "/questions/next.json'>" + quiz.name + "</a></h2><div class='question'></div></div>";
     }
 
-  var _appendQuizzesAndQuestions = function(json) {
+  var _appendQuizzes = function(json) {
     quizzes = json.quizzes
     for (var i=0; i < quizzes.length; i++) {
       quiz = quizzes[i];
       $('.container').append(_render(quiz));
-      Question.getNextQuestion(quiz.quiz_id);
     }
   }
 
@@ -23,7 +22,7 @@ var Quiz = (function() {
         type: 'get',
         url: '/quizzes.json'
       })
-      .done(_appendQuizzesAndQuestions)
+      .done(_appendQuizzes)
       .fail(_appendError)
     }
   }
@@ -37,8 +36,9 @@ var Question = (function() {
   }
 
   var _appendQuestion = function(json) {
-    question = json.question
-    $(".quiz" + quiz.quiz_id + " .question").append(_render(question));
+    question = json.question;
+    quizId = question.choices[0].quiz_id;
+    $("#quiz" + quizId + " .question").html(_render(question));
   }
 
   var _appendError = function() {
@@ -70,10 +70,3 @@ var Choice = {
     return choicesHtml
   }
 }
-
-
-//-----ON DOCUMENT READY-----
-$( document ).ready(function() {
-  sessionKey = KeyGenerator.randomKey()
-  Quiz.getQuizzes();
-})
