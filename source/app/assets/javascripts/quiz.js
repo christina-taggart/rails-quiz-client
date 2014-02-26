@@ -53,7 +53,7 @@ QuestionsController = (function(){
         data: {session_key: sessionKey},
         method: "GET"
     }).done(function(response) {
-        location.hash += link
+        location.hash = link
         render(response.question)
     }).fail(function() {
         console.log("failure")
@@ -63,8 +63,19 @@ QuestionsController = (function(){
   function render(question) {
     var $template = $($('#question-template').html());
     $template.find(".title").html(question.question);
+    $form = $template.find("form");
+    for ( var i in question.choices.reverse() ) {
+      $form.prepend(render_choice(question.choices[i]));
+    }
     $('.question-container').append($template);
-    debugger;
+  }
+
+  function render_choice(choice) {
+    var $choice_template = $($('#choice-template').html());
+    $choice_template.find('.choice-label').html(choice.choice);
+    $choice_template.find('input.choice').attr('name', 'choice_id').attr('value', choice.choice_id);
+    $choice_template.find('.question-id').attr('value', choice.question_id)
+    return $choice_template;
   }
 
   function _init() {
