@@ -4,16 +4,17 @@ $(function(){
   loadQuestions();
 });
 
+
 function newSessionKey(){
-  return Math.floor(Math.random()*10000000000)
+  return Math.floor(Math.random()*10000000000);
 }
 
 function appendQuestionText(question){
-  $('.container').append($('#question-template').clone())
-  var newQuestionDiv = $('.container .question').last()
-  newQuestionDiv.attr('id', '')
-  newQuestionDiv.attr('data-question_id', question.question_id)
-  newQuestionDiv.find('h3').text(question.question)
+  $('.container').append($('#question-template').clone());
+  var newQuestionDiv = $('.container .question').last();
+  newQuestionDiv.attr('id', '');
+  newQuestionDiv.attr('data-question_id', question.question_id);
+  newQuestionDiv.find('h3').text(question.question);
     for(var i=0; i<question.choices.length; i++){
       appendAnswerText(question.choices[i]);
     }
@@ -23,8 +24,8 @@ function appendQuestionText(question){
 function appendAnswerText(choice){
   var newQuestionDiv = $('.container .question').last();
   var newAnswerDiv = $('#answer-template').clone();
-  newAnswerDiv.find('a').text(choice.choice);
-  newAnswerDiv.attr('id', '')
+  newAnswerDiv.text(choice.choice);
+  newAnswerDiv.attr('id', '');
   newAnswerDiv.attr('data-answer_id', choice.choice_id);
   newQuestionDiv.append(newAnswerDiv);
 }
@@ -39,7 +40,6 @@ function loadQuestions(){
       data: {session_key: sessionKey, question_id: i++},
       async: false
     }).done(function(data){
-      console.log(data)
       appendQuestionText(data.question);
     }).fail(function(error){
       flag = false;
@@ -49,18 +49,47 @@ function loadQuestions(){
 
 function bindEvents(){
   $('.container').on('click', '.answer' , checkAnswer);
+  $('.submit').on('click', checkScores);
 }
 
 function checkAnswer(e) {
   e.preventDefault;
-  answerId = $(e.target.parentElement).data('answer_id');
-  questionId = $(e.target.parentElement.parentElement).data('question_id');
+  var $currentAnswer = $(e.target)
+  $currentAnswer.siblings('.answer').css('background-color', 'lightblue');
+  $currentAnswer.css('background-color', 'steelblue');
+  answerId = $currentAnswer.data('answer_id');
+  questionId = $(e.target.parentElement).data('question_id');
   $.ajax({
     url: '/questions/' + questionId + '/answers.json',
     type: 'POST',
     data: {choice_id: answerId, session_key: sessionKey}
   }).done(function(data){
-    $('.response').html(data.status.correct.toString());
+    Score.updateScore(data);
   });
 
+}
+
+var Score = {
+
+  responses: {},
+
+  result: function(){
+    resultHash = {correct: 0, incorrect: 0};
+    for(key in this.responses){
+      this.responses[key] ? resultHash.correct++ : resultHash.incorrect++;
+    }
+    return resultHash;
+  },
+
+  updateScore: function(response){
+    var questionId = response.status.question_id.toString();
+    var questionResult = response.status.correct;
+    this.responses[questionId] = questionResult;
+  }
+}
+
+function checkScores(){
+  var scores = Score.result()
+  var resultString = "You got "+scores.correct+" questions right and fucked up "+scores.incorrect+ " times!"
+  $('.response').text(resultString)
 }
