@@ -13,6 +13,6 @@ var Quiz = {
     //shitWeWant = JSON.parse(data)
   },
   quizFail: function(e, xhr) {
-    // do shit with xhr.responseText
+    $('#show-quizzes').append(xhr.statusText);
   }
 }
