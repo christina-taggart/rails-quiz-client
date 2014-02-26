@@ -31,6 +31,6 @@ var Quiz = (function() {
 
 //-----ON DOCUMENT READY-----
 $( document ).ready(function() {
-  session_key =
+  session_key = KeyGenerator.randomKey()
   Quiz.getQuizzes();
 })
