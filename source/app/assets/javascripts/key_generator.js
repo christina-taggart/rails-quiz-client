@@ -3,7 +3,7 @@ var KeyGenerator = (function() {
   var _possibleValues = "qwertyuiopasdfghjklzxcvbnm1234567890";
 
   var _randomIndex = function() {
-    return Math.floor((Math.random() * 34) + 1);
+    return Math.floor((Math.random() * 35));
   }
 
   return {
