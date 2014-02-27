@@ -18,7 +18,7 @@
       <p>{{question.question}}</p>
       <form method='post' action='/questions/{{question.question_id}}/answers.json'>
           {{#each question.choices}}
-            <input type='radio' name='choice_id' value='{{choice.choice_id}}'> {{choice}}
+            <input type='radio' name='choice_id' value='{{choice_id}}'> {{choice}}
           {{/each}}
         <input type='submit' value='Submit answer'>
         <input type='hidden' name='session_key' value=''>

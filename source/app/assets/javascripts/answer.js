@@ -21,10 +21,11 @@ var Answer = (function() {
 
   return {
     submitAnswer: function(form) {
+      debugger
       $.ajax({
         type: form.method,
         url: form.action,
-        data: $(form).serialize()
+        data: $(form).serialize() + sessionKey
       })
       .done(_showResults)
       .fail(_appendError)
