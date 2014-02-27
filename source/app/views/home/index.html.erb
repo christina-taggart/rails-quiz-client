@@ -6,6 +6,15 @@
   <div id='quiz-link'>
     <%= link_to 'See All Quizzes!', '/quizzes.json', :remote => true %>
   </div>
-  <div id='show-quizzes'>
+  <div id='show-quizzes'></div>
+  <div id='show-questions'></div>
+</div>
+
+<div id="templates" class="hidden">
+  <div id="question">
+    <p>question</p>
+    <form>
+      <input type="radio" name="choice" value="choice">choice<br>
+    </form>
   </div>
 </div>

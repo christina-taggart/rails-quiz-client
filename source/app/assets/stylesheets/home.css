@@ -3,8 +3,16 @@ body {
   color: white;
 }
 
+.hidden {
+  display: none;
+}
+
 h1 {
   text-align: center;
+}
+
+h2 {
+  padding-bottom: 20px;
 }
 
 div#intro {
