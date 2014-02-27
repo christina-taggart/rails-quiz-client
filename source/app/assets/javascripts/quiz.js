@@ -66,17 +66,11 @@ var QuestionsController = (function() {
 
   function renderQuestion(questions) {
     var $questionTemplate = $($("#question-template").html())
-    $('.question')
-    debugger
-    // .append($questionTemplate)
-    // choicesController.renderChoices(questions);
+    var $questionAnchor = $questionTemplate.find('h3')
+    $questionAnchor.html(questions.question)
+    $(".container").append($questionTemplate)
+    choicesController.renderChoices(questions);
   }
-
-    // var $quizTemplate = $($("#quiz-template").html())
-    // var $quizAnchor = $quizTemplate.find('a')
-    // $quizAnchor.html(quiz.name).attr('href', "/quizzes/"+quiz.quiz_id)
-    // $quizAnchor.data('id', quiz.quiz_id)
-    // $quizListTemplate.append($quizTemplate)
 
   return {
     showQuestion: showQuestion
@@ -86,6 +80,7 @@ var QuestionsController = (function() {
 
 var choicesController = (function() {
   function renderChoices(choices) {
+
   }
 
   return {
