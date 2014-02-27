@@ -3,6 +3,7 @@ var sessionKey = Math.floor((Math.random()*1000000));
 $(function() {
   QuizzesController.init();
   QuestionsController.init();
+  AnswersController.init();
 });
 
 
@@ -33,7 +34,6 @@ QuizzesController = (function() {
 
   return {
       init: _init
-    , loadQuizzes: _loadQuizzes
   }
 
 }())
@@ -41,40 +41,55 @@ QuizzesController = (function() {
 
 QuestionsController = (function(){
   function bindQuizLinks() {
-    $('#quiz-list').on( 'click', 'a.quiz-link', getQuestion);
+    $('#quiz-list').on( 'click', 'a.quiz-link', getInitialQuestion);
   }
 
-  function getQuestion(event) {
-    event.preventDefault();
-    var link = $(event.target).attr('href')
-    var _url = link + '/questions/next.json'
+  function changeTitle(newTitle) {
+    var title = $(event.target).html();
+    $('.current-quiz').html(title);
+  }
+
+  function getQuestion(url, linkHash) {
     $.ajax({
-        url: _url,
+        url: url,
         data: {session_key: sessionKey},
         method: "GET"
     }).done(function(response) {
-        location.hash = link
-        render(response.question)
+        location.hash = linkHash
+        render(response.question);
     }).fail(function() {
-        console.log("failure")
+        console.log("failure");
     });
+  }
+
+  function _getNextQuestion(url) {
+    getQuestion(url);
+  }
+
+  function getInitialQuestion() {
+    event.preventDefault();
+    changeTitle(event)
+    var linkHash = $(event.target).attr('href');
+    var url = linkHash + '/questions/next.json';
+    getQuestion(url, linkHash);
   }
 
   function render(question) {
     var $template = $($('#question-template').html());
     $template.find(".title").html(question.question);
     $form = $template.find("form");
+    $form.find('.question-id').attr('value', question.question_id)
+    $form.find('.session_key').attr('value', sessionKey)
     for ( var i in question.choices.reverse() ) {
       $form.prepend(render_choice(question.choices[i]));
     }
-    $('.question-container').append($template);
+    $('.question-holder').html($template);
   }
 
   function render_choice(choice) {
     var $choice_template = $($('#choice-template').html());
     $choice_template.find('.choice-label').html(choice.choice);
     $choice_template.find('input.choice').attr('name', 'choice_id').attr('value', choice.choice_id);
-    $choice_template.find('.question-id').attr('value', choice.question_id)
     return $choice_template;
   }
 
@@ -83,9 +98,56 @@ QuestionsController = (function(){
   }
 
   return {
-    init: _init
+    init: _init,
+    getNextQuestion: _getNextQuestion
   }
 }())
+
+AnswersController = (function(){
+  function _init() {
+    bindAnswerForm();
+  }
+
+  function bindAnswerForm() {
+    $('.question-container').on('submit', 'form', processAnswer);
+  }
+
+  function processAnswer(event) {
+    event.preventDefault();
+    var questionId = $(event.target).find('.question-id').val()
+    var formData = $(event.target).serialize()
+    $.ajax({
+      method: "POST",
+      url: '/questions/' + questionId + '/answers.json',
+      data: formData
+    }).done(function(response) {
+      updateNumCorrect(response.status.num_correct);
+      updateNumIncorrect(response.status.num_incorrect);
+      var url = (location.hash + '/questions/next.json').substr(1);
+      // debugger;
+      if(response.status.more_questions){
+        QuestionsController.getNextQuestion(url);
+      }
+      else {
+        $('.question-holder').html('GAME OVER SUCKA');
+      }
+    }).fail(function() {
+      console.log('Failed')
+    })
+  }
+
+  function updateNumCorrect(newCorrect) {
+    $('.correct').html(newCorrect);
+  }
+
+  function updateNumIncorrect(newIncorrect) {
+    $('.incorrect').html(newIncorrect);
+  }
+
+  return {
+    init: _init
+  }
+}());
 
 
 

@@ -28,3 +28,44 @@
 #quiz-list li {
   list-style-type: none;
 }
+
+.stats-container {
+  width: 898px;
+  border-bottom: 1px solid red;
+  background-color: aliceblue;
+  border-radius: 0 5px 3px 3px;
+  float: right;
+  height: 40px;
+}
+
+.stats-container li {
+  display: inline-block;
+  list-display-type: none;
+  margin: 8px 0;
+}
+
+.stats-container ul {
+  margin: 0;
+  padding: 0;
+}
+
+.current-quiz {
+  font-size: 1.5em;
+  font-family: monospace;
+  width: 400px;
+  padding-left: 24px;
+}
+
+.stat-num {
+  padding-right: 24px;
+}
+
+li.correctness {
+  float: right;
+  width: 250px;
+  height: 40px;
+  background-color: #ccc;
+  border-radius: 0 5px 3px 0;
+  border-left: 1px solid red;
+  margin: 0;
+}

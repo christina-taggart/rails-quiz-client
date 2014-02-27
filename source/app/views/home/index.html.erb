@@ -3,7 +3,17 @@
     <ul id="quiz-list">
     </ul>
   </div>
-  <div class="question-container"></div>
+  <div class="question-container">
+    <div class="stats-container">
+      <ul class="quiz-stats">
+        <li class="current-quiz">Current Quiz</li>
+        <li class="stat-num">Correct: <span class="correct">0</span></li>
+        <li class="stat-num">Incorrect: <span class="incorrect">0</span></li>
+        <li class="correctness"></li>
+      </ul>
+    </div>
+    <div class="question-holder"></div>
+  </div>
 </div>
 
 
@@ -19,6 +29,8 @@
   <div>
     <h1 class="title"></h1>
     <form method="post">
+      <input type="hidden" name="question_id" class="question-id">
+      <input type="hidden" name="session_key" class="session_key">
       <input type="submit" value="Submit">
     </form>
   </div>
@@ -27,6 +39,5 @@
 <script id="choice-template" type="text/template">
   <div>
     <input type="radio" class="choice" value=0 ><span class="choice-label"></span>
-    <input type="hidden" name="question_id" class="question-id">
   </div>
 </script>
