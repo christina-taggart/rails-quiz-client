@@ -2,7 +2,6 @@
   <div class='errors'></div>
 
   <div id="templates" class="hidden">
-
     <script id="quiz" type="text/x-handlebars-template">
       <div class='quiz' id='quiz{{quiz_id}}'>
         <h2><a data-id='{{quiz_id}}' href='/quizzes/{{quiz_id}}/questions/next.json'>
@@ -15,5 +14,15 @@
       </div>
     </script>
 
+    <script id="question" type="text/x-handlebars-template">
+      <p>{{question.question}}</p>
+      <form method='post' action='/questions/{{question.question_id}}/answers.json'>
+          {{#each question.choices}}
+            <input type='radio' name='choice_id' value='{{choice.choice_id}}'> {{choice}}
+          {{/each}}
+        <input type='submit' value='Submit answer'>
+        <input type='hidden' name='session_key' value=''>
+      </form>
+    </script>
   </div>
 </div>
