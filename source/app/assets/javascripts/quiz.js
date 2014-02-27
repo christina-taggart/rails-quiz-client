@@ -54,22 +54,23 @@ var QuizzesController = (function() {
 var QuestionsController = (function() {
 
   function showQuestion() {
+    var quizNumber = event.target.href.substr(-1)
     $.ajax({
       type: "GET",
-      url: "/quizzes/" + event.target.href.substr(-1) + "/questions/next.json",
+      url: "/quizzes/" + quizNumber + "/questions/next.json",
       data: { session_key: 'a124f87dec55da23'}
     })
     .done(function(serverResponse) {
-      renderQuestion(serverResponse.question)
+      renderQuestion(quizNumber, serverResponse.question)
     })
   }
 
-  function renderQuestion(questions) {
+  function renderQuestion(quizNumber, questions) {
     var $questionTemplate = $($("#question-template").html())
     var $questionAnchor = $questionTemplate.find('h3')
     $questionAnchor.html(questions.question)
     $(".container").append($questionTemplate)
-    choicesController.renderChoices(questions);
+    choicesController.renderChoices(quizNumber, questions);
   }
 
   return {
@@ -79,8 +80,10 @@ var QuestionsController = (function() {
 }());
 
 var choicesController = (function() {
-  function renderChoices(choices) {
-
+  function renderChoices(quizNumber, choices) {
+    for (var i = 0; i < choices.choices.length; i += 1) {
+      $('.choice-list').append("<li><a href='/quizzes/" + quizNumber + "/questions/next'>" + choices.choices[i].choice) + "</a></li>"
+    }
   }
 
   return {
