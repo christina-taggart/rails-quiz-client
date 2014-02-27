@@ -123,17 +123,29 @@ AnswersController = (function(){
     }).done(function(response) {
       updateNumCorrect(response.status.num_correct);
       updateNumIncorrect(response.status.num_incorrect);
+      displayLastCorrect(response);
       var url = (location.hash + '/questions/next.json').substr(1);
       // debugger;
       if(response.status.more_questions){
         QuestionsController.getNextQuestion(url);
       }
       else {
+        var $template =
         $('.question-holder').html('GAME OVER SUCKA');
       }
     }).fail(function() {
       console.log('Failed')
     })
+  }
+
+  function displayLastCorrect(response) {
+    debugger;
+    if(response.status.correct) {
+      $('.correctness').html('Correct!').css('background-color', 'green').css('color', 'white');
+    }
+    else {
+      $('.correctness').html('Wrong SUCKA!').css('background-color', 'red').css('color', 'white');
+    }
   }
 
   function updateNumCorrect(newCorrect) {
