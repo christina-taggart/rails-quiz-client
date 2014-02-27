@@ -125,21 +125,31 @@ AnswersController = (function(){
       updateNumIncorrect(response.status.num_incorrect);
       displayLastCorrect(response);
       var url = (location.hash + '/questions/next.json').substr(1);
-      // debugger;
       if(response.status.more_questions){
         QuestionsController.getNextQuestion(url);
       }
       else {
-        var $template =
-        $('.question-holder').html('GAME OVER SUCKA');
+        var $template = $($('#results-template').html());
+
+        $('.question-holder').html(render_results(response.status));
       }
     }).fail(function() {
       console.log('Failed')
     })
   }
 
+  function render_results(status) {
+    var $template = $($('#results-template').html());
+    $template.find('.final-right').html(status.num_correct);
+    $template.find('.final-wrong').html(status.num_incorrect);
+
+    var percent = Math.floor((status.num_correct * 100.0) / (status.num_correct+ status.num_incorrect));
+    $template.find('.final-percent').html(percent);
+
+    return $template;
+  }
+
   function displayLastCorrect(response) {
-    debugger;
     if(response.status.correct) {
       $('.correctness').html('Correct!').css('background-color', 'green').css('color', 'white');
     }
