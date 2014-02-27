@@ -1,8 +1,10 @@
 //-----QUIZ MODULE-----
 var Quiz = (function() {
   var _render = function(quiz) {
-      return "<div class='quiz' id='quiz" + quiz.quiz_id +"'><h2><a data-id=" + quiz.quiz_id + " href='/quizzes/" + quiz.quiz_id + "/questions/next.json'>" + quiz.name + "</a></h2><div class='question'></div><div class='result'></div></div>";
-    }
+      var handlebarTemplate = $('#quiz').html();
+      var template = Handlebars.compile(handlebarTemplate);
+      return template(quiz);
+  }
 
   var _appendQuizzes = function(json) {
     quizzes = json.quizzes
@@ -13,7 +15,8 @@ var Quiz = (function() {
   }
 
   var _appendError = function() {
-    $('.container').append('Quizzes not found!');
+    $('.errors').append('Quizzes not found!');
+    setInterval(function() { $(".errors").empty() }, 3000)
   }
 
   return {

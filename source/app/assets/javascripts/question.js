@@ -11,7 +11,8 @@ var Question = (function() {
   }
 
   var _appendError = function() {
-    $(".container").append("Question not found!");
+    $(".errors").append("Question not found!");
+    setInterval(function() { $(".errors").empty() }, 3000)
   }
 
   return {

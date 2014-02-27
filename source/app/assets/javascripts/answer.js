@@ -15,7 +15,8 @@ var Answer = (function() {
   }
 
   var _appendError = function() {
-    $(".container").append("Could not process the answer.")
+    $(".errors").html("Could not process the answer.")
+    setInterval(function() { $(".errors").empty() }, 3000)
   }
 
   return {

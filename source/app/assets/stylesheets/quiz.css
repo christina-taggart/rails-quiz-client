@@ -1,0 +1,8 @@
+.hidden {
+  display: none;
+}
+
+.errors {
+  height: 15px;
+  color: red;
+}

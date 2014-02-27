@@ -1,2 +1,19 @@
 <div class="container">
+  <div class='errors'></div>
+
+  <div id="templates" class="hidden">
+
+    <script id="quiz" type="text/x-handlebars-template">
+      <div class='quiz' id='quiz{{quiz_id}}'>
+        <h2><a data-id='{{quiz_id}}' href='/quizzes/{{quiz_id}}/questions/next.json'>
+          {{name}}
+        </a></h2>
+        <div class='question'>
+        </div>
+        <div class='result'>
+        </div>
+      </div>
+    </script>
+
+  </div>
 </div>

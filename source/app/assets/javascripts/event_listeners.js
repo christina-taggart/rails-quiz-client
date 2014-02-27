@@ -14,10 +14,17 @@ $( document ).ready(function() {
     Question.getNextQuestion(getId($(this)));
   });
 
-  //Submitting an answer for a question gives results dynamically
+  // Submitting an answer for a question gives results dynamically
   $('.container').on('submit', '.quiz form', function() {
     event.preventDefault();
     form = $(this)[0]
     Answer.submitAnswer(form);
+  });
+
+  // Clicking the next question button clears the current contents of the results div and loads the next question.
+  $('.container').on('click', '.next-question', function() {
+    event.preventDefault();
+    $(this).parent().empty();
+    debugger
   })
 })
