@@ -21,6 +21,8 @@ class QuestionsController < ApplicationController
     question = Question.find(params[:question_id])
     submitted_choice = Choice.find(params[:choice_id])
     correct_choice = question.choices.where(is_correct: true).first
+    @simple_session = SimpleSession.find_by_session_key(params[:session_key])
+
     @simple_session.tally(submitted_choice, correct_choice)
     more_questions = question.quiz.questions.where("id > ?", question.id).count > 0
     if question
