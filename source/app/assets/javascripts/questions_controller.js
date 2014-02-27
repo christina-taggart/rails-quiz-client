@@ -1,0 +1,5 @@
+
+var QuestionsController = (function() {
+  return {
+  }
+}())

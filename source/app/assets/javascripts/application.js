@@ -12,4 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require_tree .
+//= require router
+//= require quizzes_controller
+//= require questions_controller
+//= require homepage
