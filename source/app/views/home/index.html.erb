@@ -14,7 +14,22 @@
   <div id="question">
     <p>question</p>
     <form>
-      <input type="radio" name="choice" value="choice">choice<br>
+      <!-- <input id="submit" type='submit' value='submit'> -->
     </form>
   </div>
+
+  <div class='answer-div'>
+    <input class="answer" type="radio" name="choice" value="choice"><span>choice</span><br>
+  </div>
+
 </div>
+
+<!-- clone = $('#templates .answer-div').clone();
+
+$('#show-questions form').append(clone);
+
+$('#show-questions .answer').attr('value', data.question.choices[0].choice);
+
+$('#show-questions .answer-div span').html(data.question.choices[0].choice);
+
+ -->

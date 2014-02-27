@@ -29,9 +29,10 @@ var Question = {
     })
       .done(function(data) {
         $('#show-quizzes').hide();
-        clone = $('#templates #question').clone();
-        $('#show-questions').append(clone);
+        cloneQuestion = $('#templates #question').clone();
+        $('#show-questions').append(cloneQuestion);
         $('#show-questions p').html(data.question.question);
+        debugger
       });
     },
 
