@@ -1,7 +1,7 @@
-var Router = (function() {
+var router = (function() {
   function init() {
-    $('.container').on('click', '.quiz-link', QuizzesController.loadQuiz);
-    // $('.container').on('click', '.choice-link', QuizzesController.loadQuiz);
+    $('.container').on('click', '.quiz-link', quizzesController.loadQuiz);
+    $('.choice-list a').on('click', 'a', choicesController.answerChoice);
   }
 
   return {
@@ -9,7 +9,7 @@ var Router = (function() {
   }
 }())
 
-var QuizzesController = (function() {
+var quizzesController = (function() {
 
   function showQuizzes(e) {
     $.ajax({
@@ -82,16 +82,29 @@ var QuestionsController = (function() {
 var choicesController = (function() {
   function renderChoices(quizNumber, choices) {
     for (var i = 0; i < choices.choices.length; i += 1) {
-      $('.choice-list').append("<li><a href='/quizzes/" + quizNumber + "/questions/next'>" + choices.choices[i].choice) + "</a></li>"
+      $('.choice-list').append("<li><a href='#'>" + choices.choices[i].choice) + "</a></li>" //Having some link problems here. What's the deal?
     }
   }
-
+// '/quizzes/" + quizNumber + "/questions/next'
+  function answerChoice(event) {
+    event.preventDefault();
+    debugger
+    $.ajax({
+      type: "POST",
+      url: "/quizzes/1/questions.next.json",
+      data: event.target.serialize()
+    })
+    .done(function(serverResponse) {
+      console.log("done")
+    })
+  }
   return {
-    renderChoices: renderChoices
+    renderChoices: renderChoices,
+    answerChoice: answerChoice
   }
 }());
 
 $(function() {
-  Router.init()
-  QuizzesController.showQuizzes()
+  router.init()
+  quizzesController.showQuizzes()
 });
