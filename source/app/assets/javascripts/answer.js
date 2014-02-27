@@ -21,7 +21,6 @@ var Answer = (function() {
 
   return {
     submitAnswer: function(form) {
-      debugger
       $.ajax({
         type: form.method,
         url: form.action,
